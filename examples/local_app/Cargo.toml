@@ -1,0 +1,14 @@
+[package]
+name = "local_app"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[[bin]]
+name = "local_app"
+path = "main.rs"
+
+[dependencies]
+esh = { path = "../../crates/esh", features = ["env", "memory-cache", "audit"] }
+serde = { version = "1", features = ["derive"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }

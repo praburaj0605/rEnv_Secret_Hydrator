@@ -1,0 +1,36 @@
+[package]
+name = "esh-cache"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Memory, file, and Redis caches for Env-Secret-Hydrator"
+
+[features]
+default = ["memory", "file"]
+memory = []
+file = ["dep:serde_json", "dep:tokio"]
+redis-cache = ["dep:redis", "dep:serde_json", "dep:tokio"]
+
+[dependencies]
+esh-core = { workspace = true }
+async-trait = { workspace = true }
+dashmap = { workspace = true }
+chrono = { workspace = true }
+parking_lot = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true, optional = true }
+tokio = { workspace = true, optional = true }
+redis = { version = "0.27", optional = true, default-features = false, features = ["tokio-comp", "connection-manager"] }
+tracing = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["rt-multi-thread", "macros", "time"] }
+esh-test-support = { workspace = true }
+
+[[test]]
+name = "redis_live"
+required-features = ["redis-cache"]
+
+[lints]
+workspace = true

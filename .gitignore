@@ -1,0 +1,14 @@
+/target
+**/target
+Cargo.lock
+*.pdb
+.idea/
+.vscode/
+*.swp
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.proptest-regressions
+**/proptest-regressions/**

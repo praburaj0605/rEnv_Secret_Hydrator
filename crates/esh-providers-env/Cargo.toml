@@ -1,0 +1,20 @@
+[package]
+name = "esh-providers-env"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Environment variable and dotenv providers for Env-Secret-Hydrator"
+
+[dependencies]
+esh-core = { workspace = true }
+async-trait = { workspace = true }
+dotenvy = { workspace = true }
+parking_lot = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }
+esh-test-support = { workspace = true }
+
+[lints]
+workspace = true

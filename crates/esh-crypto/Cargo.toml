@@ -1,0 +1,25 @@
+[package]
+name = "esh-crypto"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Encryption adapters (Age, KMS traits, SOPS helpers) for Env-Secret-Hydrator"
+
+[features]
+default = ["age"]
+age = ["dep:age"]
+sops = []
+
+[dependencies]
+esh-core = { workspace = true }
+async-trait = { workspace = true }
+thiserror = { workspace = true }
+age = { version = "0.10", optional = true }
+zeroize = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }
+
+[lints]
+workspace = true

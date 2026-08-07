@@ -1,0 +1,83 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/esh-core",
+    "crates/esh-providers-env",
+    "crates/esh-providers-aws",
+    "crates/esh-providers-azure",
+    "crates/esh-providers-gcp",
+    "crates/esh-providers-vault",
+    "crates/esh-providers-k8s",
+    "crates/esh-providers-docker",
+    "crates/esh-cache",
+    "crates/esh-crypto",
+    "crates/esh-audit",
+    "crates/esh-test-support",
+    "crates/esh",
+    "examples/local_app",
+]
+default-members = ["crates/esh"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.75"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/example/env-secret-hydrator"
+authors = ["Env-Secret-Hydrator Contributors"]
+description = "Unified, provider-agnostic configuration and secret hydration for Rust"
+
+[workspace.dependencies]
+esh-core = { path = "crates/esh-core", version = "0.1.0" }
+esh-providers-env = { path = "crates/esh-providers-env", version = "0.1.0" }
+esh-providers-aws = { path = "crates/esh-providers-aws", version = "0.1.0" }
+esh-providers-azure = { path = "crates/esh-providers-azure", version = "0.1.0" }
+esh-providers-gcp = { path = "crates/esh-providers-gcp", version = "0.1.0" }
+esh-providers-vault = { path = "crates/esh-providers-vault", version = "0.1.0" }
+esh-providers-k8s = { path = "crates/esh-providers-k8s", version = "0.1.0" }
+esh-providers-docker = { path = "crates/esh-providers-docker", version = "0.1.0" }
+esh-cache = { path = "crates/esh-cache", version = "0.1.0" }
+esh-crypto = { path = "crates/esh-crypto", version = "0.1.0" }
+esh-audit = { path = "crates/esh-audit", version = "0.1.0" }
+esh-test-support = { path = "crates/esh-test-support", version = "0.1.0" }
+
+async-trait = "0.1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"
+toml = "0.8"
+thiserror = "2"
+zeroize = { version = "1", features = ["derive"] }
+tokio = { version = "1", features = ["rt", "sync", "time", "macros", "fs"] }
+arc-swap = "1"
+tracing = "0.1"
+bytes = "1"
+parking_lot = "0.12"
+dashmap = "6"
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+chrono = { version = "0.4", default-features = false, features = ["clock", "std", "serde"] }
+dotenvy = "0.15"
+futures = "0.3"
+rand = "0.8"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+missing_docs = "warn"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+pedantic = { level = "allow", priority = -1 }
+module_name_repetitions = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+must_use_candidate = "allow"
+needless_continue = "allow"
+match_same_arms = "allow"
+let_and_return = "allow"
+struct_excessive_bools = "allow"
+cast_possible_truncation = "allow"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = "symbols"

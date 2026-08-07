@@ -1,0 +1,112 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  schedule:
+    - cron: "0 3 * * *"
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: -Dwarnings
+
+jobs:
+  check:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        rust: ["1.75.0", "stable"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.rust }}
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+      - name: fmt
+        if: matrix.os == 'ubuntu-latest' && matrix.rust == 'stable'
+        run: cargo fmt --all -- --check
+      - name: clippy
+        run: cargo clippy --workspace --all-targets --features full -- -D warnings
+      - name: test
+        run: cargo test --workspace --features full
+      - name: docs
+        if: matrix.os == 'ubuntu-latest'
+        run: cargo doc --workspace --features full --no-deps
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: security leak suite
+        run: cargo test -p esh --test security_leak --features full
+
+  bench-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: cached load p95 budget
+        run: cargo test -p esh --test cached_load_budget --features full -- --nocapture
+      - name: criterion smoke
+        run: cargo bench -p esh --bench cached_load --features full -- --measurement-time 2
+
+  deny:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: EmbarkStudios/cargo-deny-action@v2
+
+  live-backends:
+    if: github.event_name == 'schedule' || (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'))
+    runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
+      vault:
+        image: hashicorp/vault:1.17
+        ports:
+          - 8200:8200
+        env:
+          VAULT_DEV_ROOT_TOKEN_ID: root
+          VAULT_DEV_LISTEN_ADDRESS: 0.0.0.0:8200
+        options: >-
+          --health-cmd "vault status"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+          --cap-add IPC_LOCK
+    env:
+      ESH_REDIS_URL: redis://127.0.0.1:6379
+      ESH_VAULT_ADDR: http://127.0.0.1:8200
+      VAULT_ADDR: http://127.0.0.1:8200
+      VAULT_TOKEN: root
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: live redis + vault ignored tests
+        run: |
+          cargo test -p esh-cache --features redis-cache --test redis_live -- --ignored --nocapture
+          cargo test -p esh --features full --test vault_live -- --ignored --nocapture
+
+  fuzz:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@nightly
+      - name: install cargo-fuzz
+        run: cargo install cargo-fuzz --locked
+      - name: fuzz validate_json (60s)
+        working-directory: fuzz
+        run: cargo fuzz run fuzz_validate_json -- -max_total_time=60

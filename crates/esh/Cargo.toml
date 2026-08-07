@@ -1,0 +1,110 @@
+[package]
+name = "esh"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "Env-Secret-Hydrator — unified cloud-native secret and configuration loading for Rust"
+readme = "README.md"
+keywords = ["secrets", "config", "aws", "vault", "kubernetes"]
+categories = ["config", "authentication"]
+
+[features]
+default = ["env", "json", "memory-cache"]
+json = ["esh-core/json"]
+yaml = ["esh-core/yaml"]
+toml = ["esh-core/toml"]
+env = ["dep:esh-providers-env"]
+aws = ["dep:esh-providers-aws"]
+azure = ["dep:esh-providers-azure"]
+gcp = ["dep:esh-providers-gcp"]
+vault = ["dep:esh-providers-vault"]
+k8s = ["dep:esh-providers-k8s"]
+docker = ["dep:esh-providers-docker"]
+memory-cache = ["dep:esh-cache", "esh-cache/memory"]
+file-cache = ["dep:esh-cache", "esh-cache/file"]
+redis-cache = ["dep:esh-cache", "esh-cache/redis-cache"]
+audit = ["dep:esh-audit"]
+crypto = ["dep:esh-crypto"]
+age = ["crypto", "esh-crypto/age"]
+full = [
+    "env",
+    "aws",
+    "azure",
+    "gcp",
+    "vault",
+    "k8s",
+    "docker",
+    "memory-cache",
+    "file-cache",
+    "audit",
+    "crypto",
+    "age",
+    "yaml",
+    "toml",
+]
+
+[dependencies]
+esh-core = { workspace = true }
+esh-providers-env = { workspace = true, optional = true }
+esh-providers-aws = { workspace = true, optional = true }
+esh-providers-azure = { workspace = true, optional = true }
+esh-providers-gcp = { workspace = true, optional = true }
+esh-providers-vault = { workspace = true, optional = true }
+esh-providers-k8s = { workspace = true, optional = true }
+esh-providers-docker = { workspace = true, optional = true }
+esh-cache = { workspace = true, optional = true }
+esh-audit = { workspace = true, optional = true }
+esh-crypto = { workspace = true, optional = true }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["rt-multi-thread", "macros", "time"] }
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+criterion = { version = "0.5", features = ["async_tokio"] }
+esh-test-support = { workspace = true }
+async-trait = { workspace = true }
+parking_lot = { workspace = true }
+proptest = "1"
+
+[[test]]
+name = "fallback"
+required-features = ["env", "aws"]
+
+[[test]]
+name = "rotation"
+required-features = ["env"]
+
+[[test]]
+name = "typed_load"
+required-features = ["env"]
+
+[[test]]
+name = "selection"
+required-features = ["env"]
+
+[[test]]
+name = "security_leak"
+required-features = ["env", "audit"]
+
+[[test]]
+name = "perf_smoke"
+required-features = ["env", "memory-cache"]
+
+[[test]]
+name = "vault_live"
+required-features = ["vault"]
+
+[[test]]
+name = "cached_load_budget"
+required-features = ["env", "memory-cache"]
+
+[[bench]]
+name = "cached_load"
+harness = false
+required-features = ["env", "memory-cache"]
+
+[lints]
+workspace = true
