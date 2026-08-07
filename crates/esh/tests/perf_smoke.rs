@@ -1,6 +1,6 @@
 //! Loose cached-load smoke (hard gate is `cached_load_budget`).
 
-use esh::{EnvProvider, Hydrator, MemoryCache};
+use env_secret_hydrator::{EnvProvider, Hydrator, MemoryCache};
 use std::sync::OnceLock;
 use std::time::{Duration, Instant};
 use tokio::sync::Mutex;

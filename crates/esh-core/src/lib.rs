@@ -1,6 +1,6 @@
 //! Core types and traits for Env-Secret-Hydrator.
 //!
-//! Applications should normally depend on the [`esh`](https://docs.rs/esh) façade crate.
+//! Applications should normally depend on the [`env-secret-hydrator`](https://docs.rs/env-secret-hydrator) façade crate.
 
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 

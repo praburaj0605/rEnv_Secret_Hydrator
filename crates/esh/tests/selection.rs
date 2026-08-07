@@ -1,6 +1,6 @@
 //! Provider selection integration tests (FR-002).
 
-use esh::{EnvProvider, Hydrator, ProviderId};
+use env_secret_hydrator::{EnvProvider, Hydrator, ProviderId};
 use esh_test_support::MapProvider;
 use std::sync::OnceLock;
 use tokio::sync::Mutex;
@@ -32,10 +32,10 @@ async fn detect_runtime_builds() {
         .detect_runtime()
         .keys(vec!["missing_unlikely_key_zzz".into()])
         .defaults({
-            let mut m = esh::ConfigMap::new();
+            let mut m = env_secret_hydrator::ConfigMap::new();
             m.insert(
                 "missing_unlikely_key_zzz".into(),
-                esh::ConfigValue::string("d"),
+                env_secret_hydrator::ConfigValue::string("d"),
             );
             m
         })

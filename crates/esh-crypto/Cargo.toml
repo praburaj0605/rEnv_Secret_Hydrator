@@ -4,7 +4,25 @@ version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
 description = "Encryption adapters (Age, KMS traits, SOPS helpers) for Env-Secret-Hydrator"
+documentation = "https://docs.rs/esh-crypto"
+readme = "README.md"
+keywords.workspace = true
+categories.workspace = true
+include = [
+    "src/**/*",
+    "Cargo.toml",
+    "README.md",
+    "LICENSE-MIT",
+    "LICENSE-APACHE",
+]
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
 
 [features]
 default = ["age"]

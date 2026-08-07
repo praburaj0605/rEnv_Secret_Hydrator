@@ -1,6 +1,6 @@
 //! Cached load p95 budget gate (NFR: <200ms). Linux CI asserts; other OS informational.
 
-use esh::{EnvProvider, Hydrator, MemoryCache};
+use env_secret_hydrator::{EnvProvider, Hydrator, MemoryCache};
 use std::time::{Duration, Instant};
 
 #[tokio::test]

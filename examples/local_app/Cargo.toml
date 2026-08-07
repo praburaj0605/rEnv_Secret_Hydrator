@@ -9,6 +9,6 @@ name = "local_app"
 path = "main.rs"
 
 [dependencies]
-esh = { path = "../../crates/esh", features = ["env", "memory-cache", "audit"] }
+env-secret-hydrator = { path = "../../crates/esh", features = ["env", "memory-cache", "audit"] }
 serde = { version = "1", features = ["derive"] }
 tokio = { version = "1", features = ["rt-multi-thread", "macros"] }

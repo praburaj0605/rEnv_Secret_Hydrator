@@ -1,20 +1,22 @@
-# esh — Env-Secret-Hydrator
+# env-secret-hydrator
 
 Unified, provider-agnostic configuration and secret hydration for Rust.
 
-Applications declare typed configuration once; `esh` resolves values from environment variables, `.env`, cloud secret stores, Kubernetes/Docker secrets, and local defaults — without leaking origin details into application code.
+Applications declare typed configuration once; this crate resolves values from environment variables, `.env`, cloud secret stores, Kubernetes/Docker secrets, and local defaults — without leaking origin details into application code.
+
+> **Note:** The short name `esh` is already taken on crates.io. Publish and depend on **`env-secret-hydrator`**.
 
 ## Quick start
 
 ```toml
 [dependencies]
-esh = { version = "0.1", features = ["env", "memory-cache", "audit"] }
+env-secret-hydrator = { version = "0.1", features = ["env", "memory-cache", "audit"] }
 serde = { version = "1", features = ["derive"] }
 tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
 ```
 
 ```rust
-use esh::{DotenvProvider, EnvProvider, Fallback, Hydrator, MemoryCache, SecretString};
+use env_secret_hydrator::{DotenvProvider, EnvProvider, Fallback, Hydrator, MemoryCache, SecretString};
 use serde::Deserialize;
 use std::time::Duration;
 
@@ -26,7 +28,7 @@ struct AppConfig {
 }
 
 #[tokio::main]
-async fn main() -> esh::Result<()> {
+async fn main() -> env_secret_hydrator::Result<()> {
     let config = Hydrator::builder()
         .provider(EnvProvider::new())
         .provider(DotenvProvider::from_default()?)

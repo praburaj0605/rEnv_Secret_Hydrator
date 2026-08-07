@@ -3,7 +3,7 @@
 #![allow(missing_docs)]
 
 use criterion::{criterion_group, criterion_main, Criterion};
-use esh::{EnvProvider, Hydrator, MemoryCache};
+use env_secret_hydrator::{EnvProvider, Hydrator, MemoryCache};
 use std::time::Duration;
 
 fn bench_cached_and_cold(c: &mut Criterion) {

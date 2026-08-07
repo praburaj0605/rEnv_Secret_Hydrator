@@ -4,7 +4,21 @@ version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
 description = "Audit logging sinks for Env-Secret-Hydrator"
+documentation = "https://docs.rs/esh-audit"
+readme = "README.md"
+keywords.workspace = true
+categories.workspace = true
+include = [
+    "src/**/*",
+    "Cargo.toml",
+    "README.md",
+    "LICENSE-MIT",
+    "LICENSE-APACHE",
+]
 
 [dependencies]
 esh-core = { workspace = true }

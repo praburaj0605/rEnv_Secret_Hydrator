@@ -1,15 +1,28 @@
 [package]
-name = "esh"
+name = "env-secret-hydrator"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
+homepage.workspace = true
 authors.workspace = true
 description = "Env-Secret-Hydrator — unified cloud-native secret and configuration loading for Rust"
+documentation = "https://docs.rs/env-secret-hydrator"
 readme = "README.md"
-keywords = ["secrets", "config", "aws", "vault", "kubernetes"]
-categories = ["config", "authentication"]
+keywords.workspace = true
+categories.workspace = true
+include = [
+    "src/**/*",
+    "Cargo.toml",
+    "README.md",
+    "LICENSE-MIT",
+    "LICENSE-APACHE",
+]
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
 
 [features]
 default = ["env", "json", "memory-cache"]

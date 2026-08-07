@@ -1,6 +1,6 @@
 //! Security leak suite (FR-009) — CI release gate.
 
-use esh::{
+use env_secret_hydrator::{
     AuditEvent, EnvProvider, Error, EventKind, Hydrator, MemoryAuditor, SecretBytes, SecretString,
 };
 use esh_test_support::{assert_no_leak, assert_no_leak_in, SAMPLE_SECRET, SAMPLE_TOKEN};

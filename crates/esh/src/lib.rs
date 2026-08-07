@@ -1,9 +1,9 @@
-//! # Env-Secret-Hydrator (`esh`)
+//! # Env-Secret-Hydrator (`env-secret-hydrator`)
 //!
 //! Unified, provider-agnostic configuration and secret hydration for Rust.
 //!
 //! ```rust,no_run
-//! use esh::{DotenvProvider, EnvProvider, Fallback, Hydrator, SecretString};
+//! use env_secret_hydrator::{DotenvProvider, EnvProvider, Fallback, Hydrator, SecretString};
 //! use serde::Deserialize;
 //! use std::sync::Arc;
 //!
@@ -14,7 +14,7 @@
 //!     region: String,
 //! }
 //!
-//! # async fn demo() -> esh::Result<Arc<AppConfig>> {
+//! # async fn demo() -> env_secret_hydrator::Result<Arc<AppConfig>> {
 //! let config = Hydrator::builder()
 //!     .provider(EnvProvider::new())
 //!     .provider(DotenvProvider::from_default()?)

@@ -2,7 +2,7 @@
 
 #![cfg(feature = "vault")]
 
-use esh::{MapVaultClient, Provider, VaultKvProvider};
+use env_secret_hydrator::{MapVaultClient, Provider, VaultKvProvider};
 use serde_json::json;
 use std::sync::Arc;
 

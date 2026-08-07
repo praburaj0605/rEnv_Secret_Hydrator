@@ -8,6 +8,8 @@ Implementation tracks [`DEVELOPMENT_PLAN.md`](./DEVELOPMENT_PLAN.md) (SRS-II). C
 
 Testing: see [`docs/TEST_PLAN.md`](./docs/TEST_PLAN.md) for the production-grade suite (conformance, security leak gate, perf budget, live backends).
 
+Publishing: see [`docs/PUBLISHING.md`](./docs/PUBLISHING.md) for the crates.io checklist and publish order.
+
 ## Workspace layout
 
 ```text
@@ -17,7 +19,7 @@ crates/
   esh-cache/             memory, file, redis
   esh-audit/             tracing / stdout / memory auditors
   esh-crypto/            Age + KMS decrypt traits
-  esh/                   façade crate
+  esh/                   façade (published as env-secret-hydrator)
 examples/local_app/
 ```
 
@@ -25,7 +27,7 @@ examples/local_app/
 
 ```toml
 [dependencies]
-esh = { path = "crates/esh", features = ["env", "memory-cache", "audit"] }
+env-secret-hydrator = { version = "0.1", features = ["env", "memory-cache", "audit"] }
 ```
 
 See [`crates/esh/README.md`](./crates/esh/README.md) for the feature matrix and API examples.

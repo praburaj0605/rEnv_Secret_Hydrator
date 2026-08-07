@@ -4,7 +4,21 @@ version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
 description = "AWS Secrets Manager and SSM Parameter Store providers"
+documentation = "https://docs.rs/esh-providers-aws"
+readme = "README.md"
+keywords.workspace = true
+categories.workspace = true
+include = [
+    "src/**/*",
+    "Cargo.toml",
+    "README.md",
+    "LICENSE-MIT",
+    "LICENSE-APACHE",
+]
 
 [features]
 default = []

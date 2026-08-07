@@ -9,7 +9,7 @@ Cloud SDKs and HTTP stacks inflate compile times and binary size.
 
 ## Decision
 
-Each provider family is an optional Cargo feature on the `esh` façade. Injectable client traits keep unit tests free of live cloud credentials.
+Each provider family is an optional Cargo feature on the `env-secret-hydrator` façade. Injectable client traits keep unit tests free of live cloud credentials.
 
 ## Consequences
 

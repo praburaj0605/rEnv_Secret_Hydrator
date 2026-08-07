@@ -1,6 +1,6 @@
 //! Rotation / watch integration tests (FR-004 / FR-007).
 
-use esh::{
+use env_secret_hydrator::{
     ConfigValue, EnvProvider, FailurePolicy, Hydrator, Provider, ProviderCapability, ProviderId,
     ProviderMeta, RefreshConfig, RetryPolicy, SecretString,
 };
@@ -33,13 +33,13 @@ impl Provider for DynMap {
         &self.meta
     }
 
-    async fn get(&self, key: &str) -> esh::Result<ConfigValue> {
+    async fn get(&self, key: &str) -> env_secret_hydrator::Result<ConfigValue> {
         self.values
             .lock()
             .get(key)
             .cloned()
             .map(ConfigValue::secret)
-            .ok_or_else(|| esh::Error::not_found(key))
+            .ok_or_else(|| env_secret_hydrator::Error::not_found(key))
     }
 }
 

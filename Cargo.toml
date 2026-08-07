@@ -23,9 +23,12 @@ version = "0.1.0"
 edition = "2021"
 rust-version = "1.75"
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/example/env-secret-hydrator"
-authors = ["Env-Secret-Hydrator Contributors"]
+authors = ["praburaj0605 <reachpraburaj@gmail.com>"]
+repository = "https://github.com/praburaj0605/rEnv_Secret_Hydrator"
+homepage = "https://github.com/praburaj0605/rEnv_Secret_Hydrator"
 description = "Unified, provider-agnostic configuration and secret hydration for Rust"
+keywords = ["secrets", "config", "aws", "vault", "kubernetes"]
+categories = ["config", "asynchronous"]
 
 [workspace.dependencies]
 esh-core = { path = "crates/esh-core", version = "0.1.0" }
@@ -39,7 +42,9 @@ esh-providers-docker = { path = "crates/esh-providers-docker", version = "0.1.0"
 esh-cache = { path = "crates/esh-cache", version = "0.1.0" }
 esh-crypto = { path = "crates/esh-crypto", version = "0.1.0" }
 esh-audit = { path = "crates/esh-audit", version = "0.1.0" }
-esh-test-support = { path = "crates/esh-test-support", version = "0.1.0" }
+esh-test-support = { path = "crates/esh-test-support" }
+# Façade published as env-secret-hydrator (`esh` is taken on crates.io).
+env-secret-hydrator = { path = "crates/esh", version = "0.1.0" }
 
 async-trait = "0.1"
 serde = { version = "1", features = ["derive"] }

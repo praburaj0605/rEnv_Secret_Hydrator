@@ -1,6 +1,6 @@
 //! Fallback chain integration tests (FR-005).
 
-use esh::{
+use env_secret_hydrator::{
     AwsSecretsManagerProvider, ConfigValue, DotenvProvider, EnvProvider, Fallback, Hydrator,
     MapAwsClient, SecretString,
 };
@@ -53,7 +53,7 @@ async fn defaults_when_all_providers_miss() {
     std::env::remove_var("database_url");
     std::env::remove_var("region");
 
-    let mut defaults = esh::ConfigMap::new();
+    let mut defaults = env_secret_hydrator::ConfigMap::new();
     defaults.insert(
         "database_url".into(),
         ConfigValue::secret("postgres://default"),

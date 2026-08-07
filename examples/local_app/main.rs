@@ -1,6 +1,6 @@
 //! Local development example for Env-Secret-Hydrator.
 
-use esh::{
+use env_secret_hydrator::{
     DotenvProvider, EnvProvider, Fallback, Hydrator, MemoryAuditor, MemoryCache, SecretString,
     Validator,
 };
@@ -19,7 +19,7 @@ fn default_region() -> String {
 }
 
 #[tokio::main]
-async fn main() -> esh::Result<()> {
+async fn main() -> env_secret_hydrator::Result<()> {
     let auditor = MemoryAuditor::new();
 
     let hydrator = Hydrator::builder()
@@ -31,12 +31,12 @@ async fn main() -> esh::Result<()> {
         .keys(vec!["database_url".into(), "region".into()])
         .validator(Validator::new().require("database_url"))
         .defaults({
-            let mut m = esh::ConfigMap::new();
+            let mut m = env_secret_hydrator::ConfigMap::new();
             m.insert(
                 "database_url".into(),
-                esh::ConfigValue::secret("postgres://localhost/app"),
+                env_secret_hydrator::ConfigValue::secret("postgres://localhost/app"),
             );
-            m.insert("region".into(), esh::ConfigValue::string("local"));
+            m.insert("region".into(), env_secret_hydrator::ConfigValue::string("local"));
             m
         })
         .build()

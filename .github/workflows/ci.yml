@@ -44,7 +44,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
       - name: security leak suite
-        run: cargo test -p esh --test security_leak --features full
+        run: cargo test -p env-secret-hydrator --test security_leak --features full
 
   bench-gate:
     runs-on: ubuntu-latest
@@ -53,9 +53,9 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
       - name: cached load p95 budget
-        run: cargo test -p esh --test cached_load_budget --features full -- --nocapture
+        run: cargo test -p env-secret-hydrator --test cached_load_budget --features full -- --nocapture
       - name: criterion smoke
-        run: cargo bench -p esh --bench cached_load --features full -- --measurement-time 2
+        run: cargo bench -p env-secret-hydrator --bench cached_load --features full -- --measurement-time 2
 
   deny:
     runs-on: ubuntu-latest
@@ -97,7 +97,7 @@ jobs:
       - name: live redis + vault ignored tests
         run: |
           cargo test -p esh-cache --features redis-cache --test redis_live -- --ignored --nocapture
-          cargo test -p esh --features full --test vault_live -- --ignored --nocapture
+          cargo test -p env-secret-hydrator --features full --test vault_live -- --ignored --nocapture
 
   fuzz:
     if: github.event_name == 'schedule'

@@ -92,7 +92,7 @@ env-secret-hydrator/                 # workspace root
 **Façade usage (illustrative):**
 
 ```toml
-esh = { version = "1", features = ["aws", "yaml", "redis-cache"] }
+env-secret-hydrator = { version = "1", features = ["aws", "yaml", "redis-cache"] }
 ```
 
 ### 3.3 Suggested public API shape (stabilize in P0–P1)
@@ -243,7 +243,7 @@ Estimates assume **one senior Rust engineer** (scale linearly with team size). C
 | Supply chain | Signed tags, provenance (optional), LICENSE, CODE_OF_CONDUCT |
 | Support policy | MSRV, LTS branch rules |
 | Acceptance criteria dry-run | Checklist in §8 signed off |
-| crates.io publish + GitHub Release | `esh` 1.0.0 |
+| crates.io publish + GitHub Release | `env-secret-hydrator` 1.0.0 |
 
 ---
 
@@ -488,7 +488,7 @@ Minimum viable staffing: **1 senior Rust engineer** through P4; add 1 engineer a
 ## 14. Immediate next actions
 
 1. Approve this plan and GA scope cutoff (defer SRS §6).
-2. Confirm MSRV, license (MIT/Apache-2.0 dual recommended), and crate name (`esh` vs `env-secret-hydrator`).
+2. Confirm MSRV, license (MIT/Apache-2.0 dual recommended), and crate name (`env-secret-hydrator`; `esh` is taken on crates.io).
 3. Start **Sprint 1 / P0**: workspace scaffold + core traits + env/dotenv + masking.
 4. Create GitHub Project board mirroring epics E1–E6.
 5. Schedule mid-P3 security review slot.
